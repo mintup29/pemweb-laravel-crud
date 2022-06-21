@@ -9,6 +9,8 @@ class BukuKategori extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['bukus_id', 'kategoris_id'];
+
     public function kategori(){
         return $this->hasOne(Kategori::class, 'id', 'kategoris_id');
     }

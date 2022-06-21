@@ -16,9 +16,11 @@ use App\Http\Controllers\MainController;
 
 Route::get('/', [MainController::class, 'index']);
 
-// Route::get('/', function () {
-//     return view('main');
-// });
+Route::controller(MainController::class)->prefix('buku')->name('buku.')->group(function () {
+    Route::post('/create', 'store')->name('store');
+    Route::post('/update/{buku}', 'update')->name('update');
+    Route::post('/delete/{buku}', 'destroy')->name('destroy');
+});
 
 Auth::routes();
 

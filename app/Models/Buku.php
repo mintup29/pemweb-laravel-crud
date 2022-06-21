@@ -14,4 +14,12 @@ class Buku extends Model
     public function bukuKategoris(){
         return $this->hasMany(BukuKategori::class, 'bukus_id', 'id');
     }
+
+    public function hasKategoriById($id){
+        if($this->bukuKategoris->whereIn('kategoris_id', $id)->first()) {
+            return true;
+        }
+        
+        return false;
+    }
 }
