@@ -9,7 +9,7 @@ class Buku extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['judul', 'penulis', 'penerbit', 'genre'];
+    protected $fillable = ['judul', 'penulis', 'penerbit', 'genre', 'foto'];
 
     public function bukuKategoris(){
         return $this->hasMany(BukuKategori::class, 'bukus_id', 'id');

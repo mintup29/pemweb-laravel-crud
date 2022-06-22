@@ -8,6 +8,7 @@ use App\Models\{
     Kategori,
     BukuKategori
 };
+use Illuminate\Support\Facades\Storage;
 
 class MainController extends Controller
 {
@@ -25,11 +26,14 @@ class MainController extends Controller
             // 'genre' => 'required',
         ]);
 
+        $path = Storage::disk('public')->putFile('foto', $request->file('foto'));
+
         $buku = Buku::create([
             'judul' => $request['judul'],
             'penulis' => $request['penulis'],
             'penerbit' => $request['penerbit'],
             'genre' => $request['genre'],
+            'foto' => $path,
         ]);
         
         if ($request->has('kategori')) {
@@ -50,6 +54,11 @@ class MainController extends Controller
             // 'penerbit' => 'required',
             // 'genre' => 'required',
         ]);
+
+        if($request->has('foto')){
+            $path = Storage::disk('public')->putFile('foto', $request->file('foto'));
+            $buku->foto = $path;
+        }
 
         $buku->judul = $request['judul'];
         $buku->penulis = $request['penulis'];

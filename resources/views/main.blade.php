@@ -40,6 +40,7 @@
                         <th scope="col">Penerbit</th>
                         <th scope="col">Genre</th>
                         <th scope="col">Kategori</th>
+                        <th scope="col">Foto Cover</th>
                         @auth
                             <th scope="col">Aksi</th>
                         @endauth
@@ -57,6 +58,11 @@
                                 @foreach ($buku->bukuKategoris as $bukuKategori)
                                    - {{$bukuKategori->kategori->nama}} <br>
                                 @endforeach
+                            </td>
+                            <td>
+                                @if($buku->foto)
+                                    <img src="{{Storage::url($buku->foto)}}" alt="foto" style="width: 100px; height: auto;">
+                                @endif
                             </td>
                              @auth
                             <td>
@@ -87,7 +93,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="{{url('/buku/create')}}">
+                    <form method="POST" enctype="multipart/form-data" action="{{url('/buku/create')}}">
                         @csrf
                         <div class="form-group">
                             <label for="judul">Judul</label>
@@ -118,6 +124,10 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="foto">Foto Cover</label>
+                            <input type="file" class="form-control" id="foto" placeholder="Masukkan Foto" name="foto">
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -139,7 +149,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{url('/buku/update/'.$buku->id)}}">
+                        <form method="POST" enctype="multipart/form-data" action="{{url('/buku/update/'.$buku->id)}}">
                         @csrf
                         <div class="form-group">
                             <label for="judul">Judul</label>
@@ -169,6 +179,10 @@
                                     <option value="{{$kategori->id}}" {{$buku->hasKategoriById($kategori->id) ? 'selected' : ''}}>{{$kategori->nama}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="foto">Foto Cover</label>
+                            <input type="file" class="form-control" id="foto" placeholder="Masukkan Foto" name="foto">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
